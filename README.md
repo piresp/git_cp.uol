@@ -11,12 +11,15 @@
 - [GIT INIT](#7)
 - [GIT PULL](#8)
 - [UNDO CHANGES](#9)
-- [COMMIT LOGS](#10)
+- [LOGS](#10)
 - [GIT ALIAS](#11)
 - [IGNORING UNWANTED FILES](#12)
 - [GIT COMPARE](#13)
 - [BRANCHING](#14)
-- [MERGING BRANCHES](#15)
+- [MERGING](#15)
+- [REBASING](#16)
+- [STASH ( HIDE CHANGES )](#17)
+- [TAGGING](#18)
 
 -------------------------------
 
@@ -114,6 +117,11 @@ Up-to-date repository:
 git pull origin main 
 ```  
 
+Non destructive way:
+```  
+git fech origin main
+```
+
 
 <a name="9"></a>
 #### UNDO CHANGES
@@ -134,7 +142,7 @@ git checkout -- "file_name"
 
 show all commits:
 ``` 
-git log --oneline --graph --decorate 
+git log --oneline --decorate --all --graph
 ```
 
 set a range to see commits:
@@ -275,7 +283,7 @@ git checkout mynewbranch
 
 
 <a name="15"></a>
-#### MERGING BRANCHES
+#### MERGING
 
 Wen inside a branch, like main, after make some work outside in another branch named as **newbranch** for exemple, we can comeback to the main branch and merge it, just follow my steps :)
 ```
@@ -290,3 +298,136 @@ We can also merge branches without associate it in log ( no fast forward )
 git merge newbranch --no-ff
 ```
 
+
+<a name="16"></a>
+#### REBASING
+
+Wen you want to synchronize the changes made on main branch on your secondary work branch. Inside your secundary branch use this command.
+```
+git rebase main
+```
+
+Aborting rebasing:
+```
+git rebase --abort
+```
+
+After an unsuccessful rebase, you can continue using:
+```
+git rebase --continue
+```
+
+Pull with rebase, grab changes on github to local main branch
+```  
+git pull --rebase origin main
+```
+
+
+<a name="17"></a>
+#### STASH
+
+just clear **git status** hidding modifyed content.
+```  
+git stash
+```
+
+hidding untracked files too
+```  
+git stash -u
+```
+
+hiding content with an commentary
+```  
+git stash save "whatever u want"
+```
+
+show specific stash
+```  
+git stash show stash@{index}
+```
+
+we can also list the stash list
+```  
+git stash list
+```
+
+Show up the hidden changed files
+```  
+git stash apply
+```
+
+Show up specific stash
+```  
+git stash apply stash@{index}
+```
+
+dropping unusable stash
+```  
+git stash drop
+```
+
+dropping specific stash
+```  
+git stash drop stash@{index}
+```
+
+
+<a name="18"></a>
+#### TAGGING
+
+Tag associate the last commit with a name
+
+creating tag:
+```  
+git tag myTag
+```
+
+creating tag with a message:
+```  
+git tag v-1.2 -m "Release 1.2"
+```
+
+create an annotated tag:
+```  
+git tag -a v-1.0
+```
+
+list tags:
+```  
+git tag --list
+```
+
+delete tag:
+```  
+git tag --delete myTag
+```
+
+show tag:
+```  
+git show v-1.0
+```
+
+comparing tags:
+```  
+git diff v-1.0 v-1.2
+```
+
+tagging a previus commit:
+```  
+git tag -a v-0.9-beta id96ef57
+```
+
+push specific tag:
+```  
+git push origin -v0.9-beta
+```
+
+push all tags:
+```  
+git push origin main --tags
+```
+
+delete tag from github, we push nothing to the tag space:
+```  
+git push origin :v-0.8-alpha
+```
